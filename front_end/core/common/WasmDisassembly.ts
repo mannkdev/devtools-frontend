@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import * as Platform from '../platform/platform.js';
+import * as CodeMirror from '../../third_party/codemirror.next/codemirror.next.js'
 
 /**
  * Metadata to map between bytecode #offsets and line numbers in the
@@ -14,7 +15,8 @@ interface FunctionBodyOffset {
   end: number;
 }
 export class WasmDisassembly {
-  readonly lines: string[][]; // TODO: try making private (MANN)
+  #lines: string[][]; // TODO: try making private (MANN)
+  #rawContent: CodeMirror.Text | null;
   // TODO: reduce chunk size?
   // TODO: change codemirror tree leaf/node threshold?
   readonly #offsets: number[][];
@@ -25,7 +27,7 @@ export class WasmDisassembly {
     if (lines.length !== offsets.length) {
       throw new Error('Lines and offsets don\'t match');
     }
-    this.lines = lines;
+    this.#lines = lines;
     this.#offsets = offsets;
     this.#functionBodyOffsets = functionBodyOffsets;
 
@@ -36,6 +38,8 @@ export class WasmDisassembly {
       N += chunk.length;
     }
     this.#chunkLineOffset.push(N);
+
+    this.#rawContent = null;
   }
 
   get lineNumbers(): number {
@@ -87,15 +91,29 @@ export class WasmDisassembly {
     return 0;
   }
 
-  lineAt(lineNumber: number): string {
+  theLineAt(lineNumber: number): string {
     let remain = lineNumber;
-    for (const chunk of this.lines) {
+    for (const chunk of this.#lines) {
       if (remain < chunk.length) {
         return chunk[remain];
       }
       remain -= chunk.length;
     }
     return '';
+  }
+
+  getAndClearAllLineChunks(): string[][] {
+    let ret = this.#lines;
+    this.#lines = [];
+    return ret;
+  }
+
+  getRawContent(): CodeMirror.Text | null {
+    return this.#rawContent;
+  }
+
+  setRawContent(rawContent: CodeMirror.Text) {
+    this.#rawContent = rawContent;
   }
 
   /**

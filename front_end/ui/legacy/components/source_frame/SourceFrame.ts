@@ -472,8 +472,9 @@ export class SourceFrameImpl extends Common.ObjectWrapper.eventMixin<EventTypes,
           this.rawContent = decoder.decode(view, {stream: true});
         } else if ('wasmDisassemblyInfo' in deferredContent && deferredContent.wasmDisassemblyInfo) {
           const {wasmDisassemblyInfo} = deferredContent;
-          this.rawContent = CodeMirror.Text.of2(wasmDisassemblyInfo.lines);
+          this.rawContent = CodeMirror.Text.of2(wasmDisassemblyInfo.getAndClearAllLineChunks());          
           this.wasmDisassemblyInternal = wasmDisassemblyInfo;
+          wasmDisassemblyInfo.setRawContent(this.rawContent);
         } else {
           this.rawContent = content;
           this.wasmDisassemblyInternal = null;
