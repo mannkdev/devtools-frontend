@@ -472,7 +472,7 @@ export class SourceFrameImpl extends Common.ObjectWrapper.eventMixin<EventTypes,
           this.rawContent = decoder.decode(view, {stream: true});
         } else if ('wasmDisassemblyInfo' in deferredContent && deferredContent.wasmDisassemblyInfo) {
           const {wasmDisassemblyInfo} = deferredContent;
-          this.rawContent = CodeMirror.Text.of(wasmDisassemblyInfo.lines);
+          this.rawContent = CodeMirror.Text.of2(wasmDisassemblyInfo.lines);
           this.wasmDisassemblyInternal = wasmDisassemblyInfo;
         } else {
           this.rawContent = content;
@@ -521,7 +521,7 @@ export class SourceFrameImpl extends Common.ObjectWrapper.eventMixin<EventTypes,
           const {lines, offsets, functionBodyOffsets} = await promise;
           this.rawContent = content = CodeMirror.Text.of(lines);
           this.wasmDisassemblyInternal =
-              new Common.WasmDisassembly.WasmDisassembly(lines, offsets, functionBodyOffsets);
+              new Common.WasmDisassembly.WasmDisassembly([lines], [offsets], functionBodyOffsets);
         } catch (e) {
           this.rawContent = content = error = e.message;
         } finally {

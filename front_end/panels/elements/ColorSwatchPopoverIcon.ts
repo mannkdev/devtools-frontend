@@ -297,27 +297,29 @@ export class ShadowSwatchPopoverHelper {
   }
 
   showPopover(): void {
-    if (this.swatchPopoverHelper.isShowing()) {
-      this.swatchPopoverHelper.hide(true);
-      return;
-    }
+    return; // TODO(MANN) popovers
 
-    this.cssShadowEditor = new InlineEditor.CSSShadowEditor.CSSShadowEditor();
-    this.cssShadowEditor.setModel(this.shadowSwatch.model());
-    this.cssShadowEditor.addEventListener(InlineEditor.CSSShadowEditor.Events.ShadowChanged, this.boundShadowChanged);
-    this.swatchPopoverHelper.show(this.cssShadowEditor, this.iconElement, this.onPopoverHidden.bind(this));
-    this.scrollerElement = this.iconElement.enclosingNodeOrSelfWithClass('style-panes-wrapper');
-    if (this.scrollerElement) {
-      this.scrollerElement.addEventListener('scroll', this.boundOnScroll, false);
-    }
+    // if (this.swatchPopoverHelper.isShowing()) {
+    //   this.swatchPopoverHelper.hide(true);
+    //   return;
+    // }
 
-    this.originalPropertyText = this.treeElement.property.propertyText;
-    this.treeElement.parentPane().setEditingStyle(true);
-    const uiLocation = Bindings.CSSWorkspaceBinding.CSSWorkspaceBinding.instance().propertyUILocation(
-        this.treeElement.property, false /* forName */);
-    if (uiLocation) {
-      void Common.Revealer.reveal(uiLocation, true /* omitFocus */);
-    }
+    // this.cssShadowEditor = new InlineEditor.CSSShadowEditor.CSSShadowEditor();
+    // this.cssShadowEditor.setModel(this.shadowSwatch.model());
+    // this.cssShadowEditor.addEventListener(InlineEditor.CSSShadowEditor.Events.ShadowChanged, this.boundShadowChanged);
+    // this.swatchPopoverHelper.show(this.cssShadowEditor, this.iconElement, this.onPopoverHidden.bind(this));
+    // this.scrollerElement = this.iconElement.enclosingNodeOrSelfWithClass('style-panes-wrapper');
+    // if (this.scrollerElement) {
+    //   this.scrollerElement.addEventListener('scroll', this.boundOnScroll, false);
+    // }
+
+    // this.originalPropertyText = this.treeElement.property.propertyText;
+    // this.treeElement.parentPane().setEditingStyle(true);
+    // const uiLocation = Bindings.CSSWorkspaceBinding.CSSWorkspaceBinding.instance().propertyUILocation(
+    //     this.treeElement.property, false /* forName */);
+    // if (uiLocation) {
+    //   void Common.Revealer.reveal(uiLocation, true /* omitFocus */);
+    // }
   }
 
   private shadowChanged(event: Common.EventTarget.EventTargetEvent<InlineEditor.CSSShadowModel.CSSShadowModel>): void {

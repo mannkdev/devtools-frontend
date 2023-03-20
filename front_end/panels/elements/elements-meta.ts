@@ -27,7 +27,7 @@ const UIStrings = {
    * @description Title of the 'Event Listeners' tool in the sidebar of the elements panel. Refers to
    * DOM Event listeners.
    */
-  eventListeners: 'Event Listeners',
+  eventListeners: 'Event Listeners Skinny',
   /**
    * @description Command for showing the 'Properties' tool. Refers to HTML properties.
    */

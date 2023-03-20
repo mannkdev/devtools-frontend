@@ -263,7 +263,7 @@ export class BreakpointsSidebarController implements UI.ContextFlavorListener.Co
       const text = content[idx];
       const codeSnippet = text instanceof TextUtils.Text.Text ?
           text.lineAt(uiLocation.lineNumber) :
-          text.lines[text.bytecodeOffsetToLineNumber(uiLocation.columnNumber ?? 0)] ?? '';
+          text.lineAt(text.bytecodeOffsetToLineNumber(uiLocation.columnNumber ?? 0)) ?? '';
 
       if (isHit && this.#collapsedFiles.has(sourceURL)) {
         this.#collapsedFiles.delete(sourceURL);

@@ -149,6 +149,8 @@ export class PopoverHelper {
   }
 
   private startShowPopoverTimer(event: MouseEvent, timeout: number): void {
+    return; // TODO(MANN) popovers
+
     this.scheduledRequest = this.getRequest.call(null, event);
     if (!this.scheduledRequest) {
       return;
